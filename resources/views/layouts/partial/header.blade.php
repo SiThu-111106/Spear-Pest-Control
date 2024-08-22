@@ -59,7 +59,7 @@
                             class="fas fa-phone-alt me-2 text-dark"></i>+01234567890</a>
                     <a href="#" class="text-secondary"><i
                             class="fas fa-envelope me-2 text-dark"></i>Sithunyeinchanwin@gmail.com</a>
-                </div>
+                    </div>
                 <div class="text-end pe-4 me-4 border-end border-dark search-btn">
                     <div class="search-form">
                         <form method="post" action="index.html">

@@ -10,21 +10,23 @@ use Illuminate\Support\Facades\DB;
 class StatsOverview extends BaseWidget
 {
     protected function getStats(): array
-    {   
-        return [
-            Stat::make('Logistic Users', RoleDepartment::query()->where('department_id', 3)->count())
-                ->description('All Logistics Users From SpearPestControl')
-                ->color('success'),
-            Stat::make('Bounce rate', '21%')
-                // ->description('7% increase')
-                ->descriptionIcon('heroicon-m-arrow-trending-down')
-                // ->chart([7, 2, 10, 3, 15, 4, 17])
-                ->color('danger'),
-            Stat::make('Average time on page', '3:12')
-                // ->description('3% increase')
-                ->descriptionIcon('heroicon-m-arrow-trending-up')
-                // ->chart([7, 2, 10, 3, 15, 4, 17])
-                ->color('success'),
-        ];
+    {
+        if (Auth()->user()->role_id == 1 || Auth()->user()->role_id == 2){
+            return [
+                Stat::make('All Users', RoleDepartment::query()->count())
+                    ->description('All Users From SpearPestControl')
+                    ->color('success'),
+                Stat::make('Logistic Users', RoleDepartment::query()->where('department_id', 3)->count())
+                    ->description('All Logistics Users From SpearPestControl')
+                    ->color('success'),
+                Stat::make('Sales Users', RoleDepartment::query()->where('department_id', 2)->count())
+                    ->description('All Sales Users From SpearPestControl')
+                    ->color('success'),
+                Stat::make('CRM Users', RoleDepartment::query()->where('department_id', 1)->count())
+                    ->description('All CRM Users From SpearPestControl')
+                    ->color('success'),
+            ];
+        }
+        return [];
     }
 }

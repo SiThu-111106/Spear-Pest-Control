@@ -22,6 +22,9 @@ return new class extends Migration
             $table->longText('issue')->nullable();
             $table->longText('remark')->nullable();
             $table->longText('address')->nullable();
+            $table->string('payment')->nullable();
+            $table->string('overdue')->nullable();
+            $table->string('total')->nullable();
             $table->integer('status')->default(1);
             $table->tinyInteger('created_by')->nullable();
             $table->tinyInteger('updated_by')->nullable();

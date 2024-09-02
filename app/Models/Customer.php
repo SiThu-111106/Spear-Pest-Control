@@ -19,7 +19,10 @@ class Customer extends Model
         'gender',
         'address',
         'issue',
-        'remark'
+        'remark',
+        'payment',
+        'overdue',
+        'total'
     ];
 
     protected $hidden = [

@@ -48,6 +48,19 @@ class CustomerResource extends Resource
                         ->regex('/^09\d{9}$/')
                         ->unique(ignoreRecord: true)
                         ->required(),
+                    Forms\Components\TextInput::make('total')
+                        ->label('Total Amount')
+                        ->maxLength(255)
+                        ->columnSpan(2)
+                        ->required(),
+                    Forms\Components\TextInput::make('payment')
+                        ->label('Customer Total Payment')
+                        ->maxLength(255)
+                        ->required(),
+                    Forms\Components\TextInput::make('overdue')
+                        ->label('Customer Overdue Amount')
+                        ->maxLength(255)
+                        ->required(),
                     Forms\Components\Textarea::make('issue')
                         ->label("Pest's Issue")
                         ->rows(5)
@@ -55,8 +68,7 @@ class CustomerResource extends Resource
                         ->required(),
                     Forms\Components\Textarea::make('remark')
                         ->rows(5)
-                        ->columnSpanFull()
-                        ->required(),
+                        ->columnSpanFull(),
                     Forms\Components\Textarea::make('address')
                         ->rows(5)
                         ->columnSpanFull()

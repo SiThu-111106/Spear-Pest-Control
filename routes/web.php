@@ -2,7 +2,8 @@
 
 use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Livewire\Form;
+use App\Http\Controllers\PdfController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,3 +26,5 @@ Route::get('/contact', [PageController::class, 'contact']);
 Route::get('/blog', [PageController::class, 'blog']);
 Route::get('/member', [PageController::class, 'member']);
 Route::get('/testimonial', [PageController::class, 'testimonial']);
+
+Route::get('pdf/{order}', PdfController::class)->name('pdf');

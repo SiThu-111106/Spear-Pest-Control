@@ -12,19 +12,18 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    protected static function booted()
+    public static function boot()
     {
+        parent::boot();
+
         static::deleting(function ($user) {
-            if ($user->roleDepartment) {
-                logger($user->roleDepartment . 'aaaaa');
-                $user->roleDepartment->delete();
-            }
+            $user->roleDepartments()->delete();
         });
     }
 
-    public function roleDepartment()
+    public function roleDepartments()
     {
-        return $this->belongsTo(RoleDepartment::class);
+        return $this->hasMany(RoleDepartment::class);
     }
 
     /**
@@ -38,7 +37,7 @@ class User extends Authenticatable
         'password',
         'phone',
         'gender',
-        'address'
+        'address',
     ];
 
     /**

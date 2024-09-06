@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\CustomerResource\Pages;
+use App\Filament\Resources\DueCustomerResource\Pages;
 use App\Models\Customer;
 use App\Models\Department;
 use App\Models\RoleDepartment;
@@ -16,11 +16,20 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Blade;
 
-class CustomerResource extends Resource
+class DueCustomerResource extends Resource
 {
     protected static ?string $model = Customer::class;
+        protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
-    protected static ?string $navigationIcon = 'heroicon-o-user-group';
+    public static function canCreate(): bool
+    {
+        return false;
+    }
+
+    public static function getLabel(): ?string
+    {
+        return 'Over Due Customer';
+    }
 
     public static function form(Form $form): Form
     {
@@ -105,23 +114,12 @@ class CustomerResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make()->outlined()->button(),
-                Tables\Actions\EditAction::make()->outlined()->button(),
-                Tables\Actions\Action::make('changeStatus')
-                    ->label(fn(Customer $record) => $record->status === 1 ? 'Deactivate' : 'Activate')
-                    ->outlined()
-                    ->button()
-                    ->action(function (Customer $record) {
-                        $record->status = $record->status === 1 ? 0 : 1;
-                        $record->save();
-                    })
-                    ->requiresConfirmation()
-                    ->icon(fn(Customer $record) => $record->status === '1' ? 'heroicon-o-x-circle' : 'heroicon-o-check-circle'),
                 Tables\Actions\Action::make('markDue')
-                    ->label('Mark as Due')
+                    ->label(fn(Customer $record) => $record->status === 2 ? 'Make Payment' : 'Overdue')
                     ->outlined()
                     ->button()
                     ->action(function (Customer $record) {
-                        $record->status = 2;
+                        $record->status = 1;
                         $record->save();
                     })
                     ->requiresConfirmation()
@@ -156,10 +154,10 @@ class CustomerResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListCustomers::route('/'),
-            'create' => Pages\CreateCustomer::route('/create'),
-            'view' => Pages\ViewCustomer::route('/{record}'),
-            'edit' => Pages\EditCustomer::route('/{record}/edit'),
+            'index' => Pages\ListDueCustomers::route('/'),
+            'create' => Pages\CreateDueCustomer::route('/create'),
+            'view' => Pages\ViewDueCustomer::route('/{record}'),
+            'edit' => Pages\EditDueCustomer::route('/{record}/edit'),
         ];
     }
 
@@ -168,7 +166,7 @@ class CustomerResource extends Resource
         $userId = Auth()->user()->id;
         $userDepartment = RoleDepartment::where('user_id', $userId)->value('department_id');
         $department = Department::where('id', $userDepartment)->value('name');
-        if ($department == "Sales") {
+        if ($department == "CRM") {
             return true;
         } else {
             return false;
@@ -178,6 +176,6 @@ class CustomerResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
-            ->whereIn('status', [0, 1]);
+            ->whereIn('status', [2]);
     }
 }

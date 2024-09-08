@@ -49,16 +49,18 @@ class CustomerResource extends Resource
                     Forms\Components\TextInput::make('total')
                         ->label('Total Amount')
                         ->maxLength(255)
+                        ->regex('/^[1-9]\d*$/')
                         ->columnSpan(2)
                         ->required(),
                     Forms\Components\TextInput::make('payment')
                         ->label('Customer Total Payment')
+                        ->regex('/^[1-9]\d*$/')
                         ->maxLength(255)
                         ->required(),
                     Forms\Components\TextInput::make('overdue')
                         ->label('Customer Overdue Amount')
-                        ->maxLength(255)
-                        ->required(),
+                        ->regex('/^[1-9]\d*$/')
+                        ->maxLength(255),
                     Forms\Components\Textarea::make('issue')
                         ->label("Pest's Issue")
                         ->rows(5)

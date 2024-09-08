@@ -107,11 +107,11 @@ class ServiceLocationResource extends Resource
                 //
             ])
             ->actions([
-                // Tables\Actions\ViewAction::make()->outlined()->button(),
+                Tables\Actions\ViewAction::make()->outlined()->button(),
                 Tables\Actions\EditAction::make()->outlined()->button(),
                 Tables\Actions\DeleteAction::make()->outlined()->button(),
-                Tables\Actions\DeleteAction::make()->outlined()->button(),
-                Tables\Actions\DeleteAction::make()->outlined()->button(),
+                // Tables\Actions\DeleteAction::make()->outlined()->button(),
+                // Tables\Actions\DeleteAction::make()->outlined()->button(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

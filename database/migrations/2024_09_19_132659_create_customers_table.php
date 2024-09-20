@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('payment_id')->nullable()->constrained('payments');
+            $table->foreignId('treatment_id')->nullable()->constrained('treatments');
+            $table->foreignId('frequency_id')->nullable()->constrained('frequencies');
             $table->string('name')->nullable();
             $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();

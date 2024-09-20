@@ -12,6 +12,9 @@ class Customer extends Model
     // use SoftDeletes;
 
     protected $fillable = [
+        'payment_id',
+        'treatment_id',
+        'frequency_id',
         'name',
         'email',
         'password',
@@ -22,7 +25,8 @@ class Customer extends Model
         'remark',
         'payment',
         'overdue',
-        'total'
+        'total',
+        'status'
     ];
 
     protected $hidden = [
@@ -34,4 +38,20 @@ class Customer extends Model
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function treatment()
+    {
+        return $this->belongsTo(Treatment::class);
+    }
+
+    public function payment()
+    {
+        return $this->belongsTo(Payment::class);
+    }
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
+    }
+
 }

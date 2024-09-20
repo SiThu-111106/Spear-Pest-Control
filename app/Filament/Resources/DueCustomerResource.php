@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Blade;
 class DueCustomerResource extends Resource
 {
     protected static ?string $model = Customer::class;
-        protected static ?string $navigationIcon = 'heroicon-o-user-group';
+    protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
     public static function canCreate(): bool
     {

@@ -94,7 +94,6 @@ class UserResource extends Resource
                     ->outlined()
                     ->button()
                     ->action(function (User $record) {
-                        // Check if the record has related entries and delete them
                         if ($record->roleDepartments()->exists()) {
                             $record->roleDepartments()->delete();
                         }

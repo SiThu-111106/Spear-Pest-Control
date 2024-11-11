@@ -33,21 +33,18 @@ class CustomerResource extends Resource
             ->schema([
                 Section::make('Customer Details')->schema([
                     Forms\Components\Select::make('frequency_id')
-                        ->unique(ignoreRecord: true)
                         ->label('Frequency')
                         ->options(Frequency::pluck('name', 'id'))
                         ->searchable()
                         ->preload()
                         ->required(),
                     Forms\Components\Select::make('payment_id')
-                        ->unique(ignoreRecord: true)
                         ->label('Payment')
                         ->options(Payment::pluck('name', 'id'))
                         ->searchable()
                         ->preload()
                         ->required(),
                     Forms\Components\Select::make('treatment_id')
-                        ->unique(ignoreRecord: true)
                         ->label('Treatment')
                         ->options(Treatment::pluck('name', 'id'))
                         ->searchable()

@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Forms;
+use Carbon\Carbon;
 use Filament\Tables;
 use App\Models\Customer;
 use Filament\Forms\Form;
@@ -11,12 +11,11 @@ use Filament\Tables\Table;
 use App\Models\RoleDepartment;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Filament\Resources\Resource;
-use App\Models\DueCustomerReport;
+use Filament\Tables\Filters\Filter;
 use Illuminate\Support\Facades\Blade;
+use Filament\Forms\Components\DatePicker;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\DueCustomerReportResource\Pages;
-use App\Filament\Resources\DueCustomerReportResource\RelationManagers;
 
 class DueCustomerReportResource extends Resource
 {
@@ -76,7 +75,21 @@ class DueCustomerReportResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Filter::make('created_at')
+                    ->form([
+                        DatePicker::make('from'),
+                        DatePicker::make('until'),
+                    ])
+                    ->indicateUsing(function (array $data): array {
+                        $indicators = [];
+                        if ($data['from'] ?? null) {
+                            $indicators['from'] = 'Created from ' . Carbon::parse($data['from'])->toFormattedDateString();
+                        }
+                        if ($data['until'] ?? null) {
+                            $indicators['until'] = 'Created until ' . Carbon::parse($data['until'])->toFormattedDateString();
+                        }
+                        return $indicators;
+                    }),
             ])
             ->actions([
                 // Tables\Actions\ViewAction::make(),
